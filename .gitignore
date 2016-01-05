@@ -1,3 +1,4 @@
 *.sw[op]
 *.pyc
 *.tmp
+static/node_modules
