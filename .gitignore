@@ -1,5 +1,7 @@
 *.sw[op]
 *.pyc
 *.tmp
+static/Gulpfile.js
+static/scss
 static/node_modules
 static/bower_components
