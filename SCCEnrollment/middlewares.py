@@ -19,7 +19,7 @@ class JSONMiddleware(object):
             return None
 
         # If request is from admin path, allow www-form-data.
-        if re.match(r'^\/admin.*', request.path) or re.match(r'^\/download.*', request.path):
+        if re.match(r'^\/admin.*', request.path):
             return None
 
         content_type = request.META.get('CONTENT_TYPE')
@@ -32,7 +32,8 @@ class JSONMiddleware(object):
         return None
 
     def process_response(self, request, response):
-        response['Content-Type'] = 'application/json'
+        if not re.match(r'^\/admin.*', request.path):
+            response['Content-Type'] = 'application/json'
 
         return response
 

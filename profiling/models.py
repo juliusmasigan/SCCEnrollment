@@ -31,6 +31,9 @@ class PersonalInformation(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
+    def __unicode__(self):
+        return "%s, %s" % (self.last_name, self.first_name)
+
     def natural_key(self):
         return {
             'first_name':self.first_name,
@@ -63,6 +66,9 @@ class Profile(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return "%s, %s" % (self.personal_info.last_name, self.personal_info.first_name)
 
 
 class ExtendedProfile(models.Model):
