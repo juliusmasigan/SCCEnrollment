@@ -6,6 +6,9 @@ class Condition(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
 
+    def __unicode__(self):
+        return "%s" % (self.name, )
+
     def natural_key(self):
         return {
             'name': self.name,
@@ -27,6 +30,9 @@ class Doctor(models.Model):
     address = models.CharField(max_length=500, null=True, blank=True)
     contact_number = models.CharField(max_length=50, null=True, blank=True)
 
+    def __unicode__(self):
+        return "%s" % (self.name, )
+
     def natural_key(self):
         return {
             'name': self.name,
@@ -37,9 +43,12 @@ class Doctor(models.Model):
 
 class MedicalHistory(models.Model):
     profile = models.ForeignKey(Profile, related_name="medical_profiles")
-    conditions = models.ManyToManyField(Condition, related_name="conditions")
-    medications = models.ManyToManyField(Medication, related_name="medications")
-    family_doctors = models.ManyToManyField(Doctor, related_name="doctors")
+    conditions = models.ManyToManyField(Condition, related_name="conditions", blank=True)
+    medications = models.ManyToManyField(Medication, related_name="medications", blank=True)
+    family_doctors = models.ManyToManyField(Doctor, related_name="doctors", blank=True)
+
+    class Meta:
+        verbose_name_plural = "Medical Histories"
 
 
 class EmergencyCare(models.Model):
@@ -49,4 +58,9 @@ class EmergencyCare(models.Model):
 
 class PreliminaryCare(models.Model):
     profile = models.ForeignKey(Profile, related_name="preliminary_care_profiles")
+    protocol = models.TextField()
+
+
+class FoodPermission(models.Model):
+    profile = models.ForeignKey(Profile, related_name="food_permission_profiles")
     protocol = models.TextField()
